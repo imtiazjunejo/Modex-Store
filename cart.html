@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Modex</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="logo">Modex</div>
+      </div>
+
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+
+      <ul class="nav-center" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="#">Collection</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="#" class="icon"><i class="fas fa-search"></i></a>
+        <a href="#" class="icon"><i class="fas fa-user"></i></a>
+        <a href="cart.html" class="icon cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="cart-section">
+    <h2>Your Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">
+      <p>Total: $<span id="cart-total">0.00</span></p>
+      <button id="clear-cart" class="btn">Clear Cart</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
+    <!-- Brand Info -->
+    <div>
+      <h3>MODEX</h3>
+      <p>
+        Curating the latest fashion apparel for your wardrobe, combining style, comfort, and quality since 2024.
+      </p>
+    </div>
+
+    <!-- Shop -->
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Products</a></li>
+        <li><a href="#">T-Shirts</a></li>
+        <li><a href="#">Hoodies</a></li>
+        <li><a href="#">Jackets</a></li>
+        <li><a href="#">Jeans</a></li>
+        <li><a href="#">Caps</a></li>
+      </ul>
+    </div>
+
+    <!-- Support -->
+    <div>
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="border-t">
+    © 2025 Modex Store. All rights reserved.
+  </div>
+</footer>
+
+
+  <script src="js/main.js"></script>
+</body>
+</html>

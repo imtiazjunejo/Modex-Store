@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - Modex{% endblock %}
+
+{% block content %}
+  <!-- Checkout Section -->
+  <section class="checkout-section">
+    <div class="container py-5">
+      <div class="checkout-wrapper">
+        <h2 class="checkout-title">Checkout</h2>
+        
+        <div class="row g-4">
+          <!-- Checkout Form -->
+          <div class="col-lg-8">
+            <div class="checkout-form-card">
+              <h3>Shipping Information</h3>
+              <form method="POST" action="{{ url_for('checkout') }}" class="checkout-form">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="shipping_name">Full Name *</label>
+                    <input type="text" id="shipping_name" name="shipping_name" value="{{ user.username if user else '' }}" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="shipping_email">Email *</label>
+                    <input type="email" id="shipping_email" name="shipping_email" value="{{ user.email if user else '' }}" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="shipping_address">Shipping Address *</label>
+                    <textarea id="shipping_address" name="shipping_address" rows="3" required placeholder="Enter your complete address"></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="shipping_city">City *</label>
+                    <input type="text" id="shipping_city" name="shipping_city" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="shipping_zipcode">Zip Code *</label>
+                    <input type="text" id="shipping_zipcode" name="shipping_zipcode" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="shipping_phone">Phone Number *</label>
+                    <input type="tel" id="shipping_phone" name="shipping_phone" required placeholder="+92 300 1234567">
+                  </div>
+                </div>
+                
+                <div class="payment-section">
+                  <h3>Payment Method</h3>
+                  <div class="payment-options">
+                    <label class="payment-option">
+                      <input type="radio" name="payment_method" value="card" checked required>
+                      <div class="payment-option-content">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Credit/Debit Card</span>
+                      </div>
+                    </label>
+                    <label class="payment-option">
+                      <input type="radio" name="payment_method" value="cod" required>
+                      <div class="payment-option-content">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash on Delivery</span>
+                      </div>
+                    </label>
+                    <label class="payment-option">
+                      <input type="radio" name="payment_method" value="bank_transfer" required>
+                      <div class="payment-option-content">
+                        <i class="fas fa-university"></i>
+                        <span>Bank Transfer</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                
+                <button type="submit" class="btn-place-order">
+                  <i class="fas fa-lock"></i> Place Order
+                </button>
+              </form>
+            </div>
+          </div>
+          
+          <!-- Order Summary -->
+          <div class="col-lg-4">
+            <div class="order-summary-card">
+              <h3>Order Summary</h3>
+              <div class="order-items-list">
+                {% for item in cart_items %}
+                <div class="order-item">
+                  <img src="{{ url_for('static', filename='images/' + item.product.image) }}" alt="{{ item.product.name }}">
+                  <div class="order-item-info">
+                    <h4>{{ item.product.name }}</h4>
+                    <p>Qty: {{ item.quantity }} × PKR {{ "%.2f"|format(item.product.price) }}</p>
+                  </div>
+                  <p class="order-item-price">PKR {{ "%.2f"|format(item.product.price * item.quantity) }}</p>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="summary-divider"></div>
+              <div class="summary-details">
+                <div class="summary-row">
+                  <span>Subtotal:</span>
+                  <span>PKR {{ "%.2f"|format(total) }}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping:</span>
+                  <span>PKR 0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Tax:</span>
+                  <span>PKR 0.00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row total-row">
+                  <span>Total:</span>
+                  <span class="total-amount">PKR {{ "%.2f"|format(total) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

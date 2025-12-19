@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Modex Store - Shop{% endblock %}
+
+{% block content %}
+  <!-- Shop Section -->
+  <section class="shop">
+    <div class="container py-5">
+      <h2 class="section-title">Shop All Products</h2>
+      <div class="filter-section mb-4">
+        <label for="category">Filter by Category:</label>
+        <select id="category" onchange="filterCategory(this.value)" class="form-select" style="max-width: 300px; display: inline-block;">
+          <option value="">All Categories</option>
+          {% for cat in categories %}
+          <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>{{ cat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="row g-4">
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+          <a href="{{ url_for('product_details', product_id=product.id) }}" class="product-link">
+            <div class="card product-card-glass">
+              <div class="product-image-wrapper">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" class="card-img-top product-image">
+                <div class="product-overlay">
+                  <div class="view-details-btn">
+                    <i class="fas fa-eye"></i> View Details
+                  </div>
+                </div>
+              </div>
+              <div class="card-body product-info">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text product-price">PKR {{ product.price }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

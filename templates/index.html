@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-card">
+        <h1 class="hero-title">Upgrade Your Style with Modex</h1>
+        <p class="hero-subtitle">Discover the latest trends in fashion. From casual hoodies to premium jackets, find your perfect look at unbeatable prices.</p>
+        <div class="hero-features">
+          <div class="feature">
+            <i class="fas fa-shipping-fast"></i>
+            <span>Free Shipping</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-undo"></i>
+            <span>Easy Returns</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-lock"></i>
+            <span>Secure Payment</span>
+          </div>
+        </div>
+        <div class="hero-buttons">
+          <a href="{{ url_for('shop') }}" class="btn primary">Shop Now</a>
+          <a href="#categories" class="btn secondary">Explore Collection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop Categories Section -->
+  <section class="categories" id="categories">
+    <div class="container-fluid px-4 py-3">
+      <div class="section-wrapper">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-container">
+          {% for category in categories %}
+          <a href="{{ url_for('category_page', category_name=category) }}" class="category-link">
+            <div class="category-box-glass">
+              <div class="category-icon">
+                {% if 'shirt' in category.lower() or 't-shirt' in category.lower() %}
+                  <i class="fas fa-tshirt"></i>
+                {% elif 'hoodie' in category.lower() %}
+                  <i class="fas fa-vest"></i>
+                {% elif 'jacket' in category.lower() %}
+                  <i class="fas fa-jacket"></i>
+                {% elif 'jean' in category.lower() %}
+                  <i class="fas fa-user-tie"></i>
+                {% elif 'cap' in category.lower() %}
+                  <i class="fas fa-hat-cowboy"></i>
+                {% else %}
+                  <i class="fas fa-shopping-bag"></i>
+                {% endif %}
+              </div>
+              <h3>{{ category }}</h3>
+              <p>Explore our collection</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured" id="featured">
+    <div class="container-fluid px-4 py-3">
+      <div class="section-wrapper">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="row g-4">
+          {% for product in products %}
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <a href="{{ url_for('product_details', product_id=product.id) }}" class="product-link">
+              <div class="card product-card-glass">
+                <div class="product-image-wrapper">
+                  <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" class="card-img-top product-image">
+                  <div class="product-overlay">
+                    <div class="view-details-btn">
+                      <i class="fas fa-eye"></i> View Details
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body product-info">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p class="card-text product-price">PKR {{ product.price }}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="home-about" id="about">
+    <div class="container py-3">
+      <div class="home-about-wrapper">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-xl-8">
+            <div class="home-about-content text-center">
+              <h2 class="home-about-title">About Modex</h2>
+              <p class="home-about-subtitle">Your trusted fashion destination since 2024</p>
+              <p class="home-about-text">
+                Modex was founded with a simple mission: to provide high-quality fashion apparel that combines style, comfort, and affordability. We believe that everyone deserves to look and feel their best without breaking the bank.
+              </p>
+              <p class="home-about-text">
+                Starting as a small online store, we've grown into a trusted fashion destination, serving thousands of satisfied customers. Our commitment to quality and customer satisfaction has been the driving force behind our success.
+              </p>
+              <div class="home-about-features justify-content-center">
+                <div class="home-about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>Premium Quality Products</span>
+                </div>
+                <div class="home-about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>10K+ Happy Customers</span>
+                </div>
+                <div class="home-about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>500+ Products</span>
+                </div>
+                <div class="home-about-feature">
+                  <i class="fas fa-check-circle"></i>
+                  <span>4.9★ Average Rating</span>
+                </div>
+              </div>
+              <div class="home-about-image mt-4">
+                <div class="about-image-card">
+                  <div class="about-stats-mini">
+                    <div class="mini-stat">
+                      <div class="mini-stat-number">10K+</div>
+                      <div class="mini-stat-label">Customers</div>
+                    </div>
+                    <div class="mini-stat">
+                      <div class="mini-stat-number">500+</div>
+                      <div class="mini-stat-label">Products</div>
+                    </div>
+                    <div class="mini-stat">
+                      <div class="mini-stat-number">4.9★</div>
+                      <div class="mini-stat-label">Rating</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="{{ url_for('about') }}" class="btn-learn-more">
+                Learn More <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="home-contact" id="contact">
+    <div class="container py-3">
+      <div class="home-contact-wrapper">
+        <h2 class="home-contact-title">Get in Touch</h2>
+        <p class="home-contact-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        
+        <div class="row g-5">
+          <!-- Contact Form -->
+          <div class="col-lg-8">
+            <div class="contact-form-card">
+              <h3>Send us a Message</h3>
+              <form method="POST" action="{{ url_for('contact') }}" class="contact-form">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="home_name">Your Name *</label>
+                    <input type="text" id="home_name" name="name" required placeholder="Enter your name">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="home_email">Your Email *</label>
+                    <input type="email" id="home_email" name="email" required placeholder="your.email@example.com">
+                  </div>
+                  <div class="col-12">
+                    <label for="home_subject">Subject *</label>
+                    <input type="text" id="home_subject" name="subject" required placeholder="What is this regarding?">
+                  </div>
+                  <div class="col-12">
+                    <label for="home_message">Your Message *</label>
+                    <textarea id="home_message" name="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn-submit-message">
+                      <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="col-lg-4">
+            <div class="contact-info-card">
+              <h3>Contact Information</h3>
+              <div class="contact-info-list">
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="contact-info-details">
+                    <h4>Address</h4>
+                    <p>123 Fashion Street, Karachi, Pakistan</p>
+                  </div>
+                </div>
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="fas fa-phone"></i>
+                  </div>
+                  <div class="contact-info-details">
+                    <h4>Phone</h4>
+                    <p>+92 300 1234567</p>
+                  </div>
+                </div>
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="contact-info-details">
+                    <h4>Email</h4>
+                    <p>info@modexstore.com</p>
+                  </div>
+                </div>
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="contact-info-details">
+                    <h4>Business Hours</h4>
+                    <p>Mon-Fri: 9AM - 6PM<br>Sat: 10AM - 4PM</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Media -->
+              <div class="social-media-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                  <a href="#" class="social-link" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" class="social-link" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a href="#" class="social-link" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="#" class="social-link" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

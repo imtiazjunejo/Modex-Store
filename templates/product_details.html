@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Modex Store{% endblock %}
+
+{% block content %}
+  <!-- Product Details Section -->
+  <section class="product-details-section">
+    <div class="container py-5">
+      <div class="product-details-wrapper">
+        <div class="product-details-card">
+          <div class="row g-4">
+            <!-- Product Image -->
+            <div class="col-lg-6">
+              <div class="product-image-container">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" class="product-main-image">
+              </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="col-lg-6">
+              <div class="product-info-container">
+                <div class="product-badge">
+                  <i class="fas fa-star"></i>
+                  <span>Featured Product</span>
+                </div>
+                <h1 class="product-name">{{ product.name }}</h1>
+                <div class="product-category">
+                  <i class="fas fa-tag"></i>
+                  <span>{{ product.category }}</span>
+                </div>
+                <div class="product-price-section">
+                  <span class="product-price">PKR {{ "%.2f"|format(product.price) }}</span>
+                </div>
+                <div class="product-description">
+                  <h3>Description</h3>
+                  <p>Discover the perfect blend of style and comfort with our premium {{ product.name }}. Made with high-quality materials, this product is designed to elevate your wardrobe. Whether you're looking for casual wear or something more refined, this piece delivers exceptional quality and timeless style.</p>
+                </div>
+                <div class="product-features">
+                  <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Premium Quality</span>
+                  </div>
+                  <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Free Shipping</span>
+                  </div>
+                  <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>30-Day Returns</span>
+                  </div>
+                  <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Secure Payment</span>
+                  </div>
+                </div>
+                <div class="product-actions">
+                  {% if current_user.is_authenticated %}
+                  <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}" class="add-to-cart-form">
+                    <button type="submit" class="btn-add-to-cart">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>Add to Cart</span>
+                    </button>
+                  </form>
+                  <a href="{{ url_for('shop') }}" class="btn-continue-shopping">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Continue Shopping</span>
+                  </a>
+                  {% else %}
+                  <a href="{{ url_for('login') }}" class="btn-add-to-cart">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login to Add to Cart</span>
+                  </a>
+                  <a href="{{ url_for('shop') }}" class="btn-continue-shopping">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Continue Shopping</span>
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

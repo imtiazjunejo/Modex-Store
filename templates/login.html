@@ -1,0 +1,444 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Modex{% endblock %}
+
+{% block content %}
+  <div class="auth-background">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h1>Welcome Back</h1>
+          <p class="auth-subtitle">Login to your Modex account</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <div class="flash-alert flash-error">
+                  <i class="fas fa-exclamation-circle"></i>
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="auth-form" id="loginForm">
+          <div class="form-group">
+            <div class="input-wrapper">
+              <i class="fas fa-user"></i>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                placeholder="Enter your username"
+                required
+                class="form-input"
+              >
+            </div>
+            <span class="form-error" id="usernameError"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="input-wrapper">
+              <i class="fas fa-lock"></i>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter your password"
+                required
+                class="form-input"
+              >
+              <button type="button" class="toggle-password" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <button type="submit" class="auth-btn">
+            <span>Login</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <p class="auth-link">
+          Don't have an account?
+        </p>
+        <a href="{{ url_for('signup') }}" class="auth-secondary-btn">
+          <span>Sign up here</span>
+          <i class="fas fa-user-plus"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    .auth-background {
+      background: #fff;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .auth-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+
+    .auth-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .auth-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .auth-subtitle {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .flash-messages {
+      margin-bottom: 1.5rem;
+      animation: slideDown 0.4s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .flash-alert {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c0392b;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+
+    .flash-alert i {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .auth-form {
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      left: 1.2rem;
+      color: #999;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fff;
+      color: #111;
+      font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #ff6600;
+      box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+    }
+
+    .form-input:focus + i {
+      color: #ff6600;
+    }
+
+    .form-input::placeholder {
+      color: #bbb;
+      font-weight: 400;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: #ff6600;
+    }
+
+    .form-error {
+      display: block;
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      min-height: 1.2rem;
+      font-weight: 500;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 1rem;
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+    }
+
+    .auth-btn:hover {
+      background: #ff8533;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
+    }
+
+    .auth-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .auth-btn:hover i {
+      transform: translateX(3px);
+    }
+
+    .auth-link {
+      margin-top: 1.8rem;
+      font-size: 0.9rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .auth-link-text {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+    }
+
+    .auth-link-text:hover {
+      color: #764ba2;
+    }
+
+    .auth-link-text::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.3s ease;
+    }
+
+    .auth-link-text:hover::after {
+      width: 100%;
+    }
+
+    .auth-secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.5rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #111;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-secondary-btn:hover {
+      background: #f9f9f9;
+      border-color: #ff6600;
+      color: #ff6600;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .auth-secondary-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .auth-secondary-btn:hover i {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 2.5rem 1.8rem;
+        border-radius: 20px;
+      }
+
+      .auth-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .auth-subtitle {
+        font-size: 0.85rem;
+      }
+
+      .form-input {
+        padding: 0.95rem 1rem 0.95rem 2.8rem;
+        font-size: 0.9rem;
+      }
+
+      .auth-btn {
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+
+  <script>
+    // Password visibility toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword?.addEventListener('click', function(e) {
+      e.preventDefault();
+      const icon = this.querySelector('i');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // Form validation
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const usernameError = document.getElementById('usernameError');
+    const passwordError = document.getElementById('passwordError');
+
+    loginForm?.addEventListener('submit', function(e) {
+      let isValid = true;
+
+      // Clear previous errors
+      usernameError.textContent = '';
+      passwordError.textContent = '';
+
+      // Username validation
+      if (!usernameInput.value.trim()) {
+        usernameError.textContent = 'Username is required';
+        isValid = false;
+      } else if (usernameInput.value.length < 3) {
+        usernameError.textContent = 'Username must be at least 3 characters';
+        isValid = false;
+      }
+
+      // Password validation
+      if (!passwordInput.value.trim()) {
+        passwordError.textContent = 'Password is required';
+        isValid = false;
+      } else if (passwordInput.value.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+
+    // Real-time validation
+    usernameInput?.addEventListener('blur', function() {
+      if (!this.value.trim()) {
+        usernameError.textContent = 'Username is required';
+      } else if (this.value.length < 3) {
+        usernameError.textContent = 'Username must be at least 3 characters';
+      } else {
+        usernameError.textContent = '';
+      }
+    });
+
+    passwordInput?.addEventListener('blur', function() {
+      if (!this.value.trim()) {
+        passwordError.textContent = 'Password is required';
+      } else if (this.value.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters';
+      } else {
+        passwordError.textContent = '';
+      }
+    });
+  </script>
+{% endblock %}

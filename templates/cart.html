@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart - Modex{% endblock %}
+
+{% block content %}
+  <!-- Cart Section -->
+  <section class="cart-section">
+    <div class="container py-5">
+      <div class="cart-wrapper">
+        <h2 class="cart-page-title">Your Shopping Cart</h2>
+        
+        {% if cart_items %}
+        <div class="row g-4">
+          <!-- Cart Items -->
+          <div class="col-lg-8">
+            <div class="cart-items-container">
+              {% for item in cart_items %}
+              <div class="cart-item-card">
+                <div class="cart-item-image">
+                  <img src="{{ url_for('static', filename='images/' + item.product.image) }}" alt="{{ item.product.name }}">
+                </div>
+                <div class="cart-item-info">
+                  <h3><a href="{{ url_for('product_details', product_id=item.product.id) }}">{{ item.product.name }}</a></h3>
+                  <p class="item-category">{{ item.product.category }}</p>
+                  <p class="item-unit-price">PKR {{ "%.2f"|format(item.product.price) }} each</p>
+                  <div class="quantity-controls">
+                    <form method="POST" action="{{ url_for('remove_from_cart', product_id=item.product.id) }}" style="display: inline;">
+                      <button type="submit" class="qty-btn" title="Decrease">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                    </form>
+                    <span class="quantity-display">{{ item.quantity }}</span>
+                    <form method="POST" action="{{ url_for('add_to_cart', product_id=item.product.id) }}" style="display: inline;">
+                      <button type="submit" class="qty-btn" title="Increase">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+                <div class="cart-item-price">
+                  <p class="item-subtotal">PKR {{ "%.2f"|format(item.product.price * item.quantity) }}</p>
+                  <form method="POST" action="{{ url_for('delete_from_cart', product_id=item.product.id) }}">
+                    <button type="submit" class="btn-remove-item" title="Remove">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <!-- Order Summary -->
+          <div class="col-lg-4">
+            <div class="cart-summary-card">
+              <h3>Order Summary</h3>
+              <div class="summary-details">
+                <div class="summary-row">
+                  <span>Subtotal:</span>
+                  <span>PKR {{ "%.2f"|format(total) }}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping:</span>
+                  <span>PKR 0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Tax:</span>
+                  <span>PKR 0.00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row total-row">
+                  <span>Total:</span>
+                  <span class="total-amount">PKR {{ "%.2f"|format(total) }}</span>
+                </div>
+              </div>
+              <div class="cart-actions">
+                <a href="{{ url_for('checkout') }}" class="btn-buy-now">
+                  <i class="fas fa-bolt"></i> Buy Now
+                </a>
+                <button id="clear-cart" class="btn-clear-cart">
+                  <i class="fas fa-trash-alt"></i> Clear Cart
+                </button>
+                <a href="{{ url_for('shop') }}" class="btn-continue-shopping">
+                  <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+          <i class="fas fa-shopping-cart"></i>
+          <h3>Your cart is empty</h3>
+          <p>Start shopping to add items to your cart</p>
+          <a href="{{ url_for('shop') }}" class="btn-shop-now">Continue Shopping</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
